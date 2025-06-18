@@ -67,7 +67,7 @@ export async function GET(
         direction: tx.senderId === userId ? 'sent' : 'received',
       })),
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

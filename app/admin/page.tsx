@@ -36,7 +36,7 @@ export default function AdminPage() {
       } else {
         toast.error(data.error || 'Minting failed');
       }
-    } catch (error) {
+    } catch {
       toast.error('An error occurred');
     } finally {
       setLoading(false);

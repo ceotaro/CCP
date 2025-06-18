@@ -35,7 +35,7 @@ export default function TransferPage() {
       } else {
         toast.error(data.error || 'Transfer failed');
       }
-    } catch (error) {
+    } catch {
       toast.error('An error occurred');
     } finally {
       setLoading(false);

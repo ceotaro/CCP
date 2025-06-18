@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             role: user.role,
           };
-        } catch (error) {
+        } catch {
           return null;
         }
       },

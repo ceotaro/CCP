@@ -18,7 +18,7 @@ export default function Home() {
       fetchUserData();
       fetchTransactions();
     }
-  }, [session]);
+  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserData = async () => {
     try {
@@ -26,7 +26,7 @@ export default function Home() {
       // In production, this would fetch the user's current balance
       setBalance(1000); // Placeholder balance
       setLoading(false);
-    } catch (error) {
+    } catch {
       toast.error('Failed to fetch user data');
       setLoading(false);
     }
@@ -41,7 +41,7 @@ export default function Home() {
         const data = await res.json();
         setTransactions(data.transactions);
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to fetch transactions');
     }
   };

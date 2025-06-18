@@ -1,18 +1,18 @@
 import { prisma } from '@/lib/db';
 import { TransactionType } from '@prisma/client';
-import { z } from 'zod';
 
-const transferSchema = z.object({
-  senderId: z.string().uuid(),
-  receiverId: z.string().uuid(),
-  amount: z.number().int().positive(),
-});
+// Schema for validation - keeping for future use
+// const transferSchema = z.object({
+//   senderId: z.string().uuid(),
+//   receiverId: z.string().uuid(),
+//   amount: z.number().int().positive(),
+// });
 
-const mintSchema = z.object({
-  adminId: z.string().uuid(),
-  userId: z.string().uuid(),
-  amount: z.number().int().positive(),
-});
+// const mintSchema = z.object({
+//   adminId: z.string().uuid(),
+//   userId: z.string().uuid(),
+//   amount: z.number().int().positive(),
+// });
 
 export async function processPayment({
   senderId,
@@ -70,7 +70,7 @@ async function processDbTransfer(senderId: string, receiverId: string, amount: n
   });
 }
 
-async function processBlockchainTransfer(senderId: string, receiverId: string, amount: number) {
+async function processBlockchainTransfer(_senderId: string, _receiverId: string, _amount: number) {
   // Placeholder for blockchain implementation
   // This would interact with smart contracts using ethers.js
   throw new Error('Blockchain mode not yet implemented');
