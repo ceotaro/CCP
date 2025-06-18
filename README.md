@@ -76,7 +76,17 @@ Regional Digital Currency Management System - A SaaS platform for issuing and ma
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run lint` - Run ESLint
+- `npm run lint:fix` - Run ESLint with auto-fix
+- `npm run type-check` - TypeScript type checking
+- `npm run prisma:generate` - Generate Prisma client
+- `npm run prisma:push` - Push schema to database
 - `npm run prisma:studio` - Open Prisma Studio
+
+## Note for Windows/WSL Users
+
+If you encounter issues with `npx tsc`, use the npm scripts instead:
+- Use `npm run type-check` instead of `npx tsc --noEmit`
+- Use `npm run lint` instead of `npx eslint`
 
 ## Deploy on Vercel
 
