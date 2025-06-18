@@ -99,6 +99,23 @@ If you encounter `npx` issues on Windows, always use the npm scripts instead of 
 
 ## Deploy on Vercel
 
+### Required Environment Variables
+
+Set these environment variables in Vercel dashboard:
+
+```
+CIVICCOIN_MODE=DB
+DATABASE_URL=your_postgresql_connection_string
+NEXTAUTH_URL=https://your-app-name.vercel.app
+NEXTAUTH_SECRET=your_random_secret_string
+```
+
+### Deployment Steps
+
+1. Connect your GitHub repository to Vercel
+2. Set the environment variables above
+3. Deploy automatically triggers on git push
+
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
