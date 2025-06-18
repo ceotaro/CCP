@@ -82,22 +82,20 @@ Regional Digital Currency Management System - A SaaS platform for issuing and ma
 - `npm run prisma:push` - Push schema to database
 - `npm run prisma:studio` - Open Prisma Studio
 
-## Note for Windows Users
+## Cross-Platform Development
 
-### PowerShell Users
-If you encounter issues with `npx tsc` in PowerShell, use:
-```powershell
-npm run type-check:windows
-```
+### TypeScript Type Checking
+- **Recommended (all platforms)**: `npm run type-check:safe`
+- **Standard**: `npm run type-check` (may not work in some Windows environments)
 
-### WSL Users
-```bash
-npm run type-check
-```
+### Other Commands
+- `npm run dev` - Development server
+- `npm run build` - Production build  
+- `npm run lint` - ESLint check
+- `npm run lint:fix` - ESLint auto-fix
 
-### General
-- Use `npm run lint` instead of `npx eslint`
-- Use `npm run dev` for development server
+### Platform Notes
+If you encounter `npx` issues on Windows, always use the npm scripts instead of direct `npx` commands.
 
 ## Deploy on Vercel
 

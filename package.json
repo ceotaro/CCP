@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "type-check": "npx tsc --noEmit",
-    "type-check:windows": "node_modules\\.bin\\tsc --noEmit",
+    "type-check": "tsc --noEmit",
+    "type-check:safe": "node node_modules/typescript/lib/tsc.js --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio"
