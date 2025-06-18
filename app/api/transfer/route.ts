@@ -29,6 +29,13 @@ export async function POST(req: NextRequest) {
       amount,
     });
 
+    if (!transaction) {
+      return NextResponse.json(
+        { error: 'Failed to create transaction' },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({
       success: true,
       transaction: {

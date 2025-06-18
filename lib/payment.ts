@@ -119,5 +119,7 @@ export async function mintTokens({
   } else if (mode === 'BLOCKCHAIN') {
     // Placeholder for blockchain minting
     throw new Error('Blockchain minting not yet implemented');
+  } else {
+    throw new Error('Invalid CIVICCOIN_MODE');
   }
 }
