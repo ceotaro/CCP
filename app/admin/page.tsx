@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Layout } from '@/components/Layout';
 import { toast } from 'react-toastify';
 
 interface User {
@@ -82,32 +83,26 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <button
-            onClick={() => router.push('/')}
-            className="text-blue-600 hover:text-blue-800"
-          >
-            ← Back to Dashboard
-          </button>
+    <Layout>
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">管理者ダッシュボード</h1>
+          <p className="text-gray-600">システム管理とトークン発行を行います</p>
         </div>
-      </nav>
 
-      <main className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Mint Tokens Section */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-6">Mint Tokens</h2>
+            <h2 className="text-2xl font-bold mb-6">トークン発行</h2>
             <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-6">
               <p className="text-purple-800 text-sm">
-                As an admin, you can mint new CivicCoins for users.
+                💎 管理者として、ユーザーに新しいCivicCoinを発行できます
               </p>
             </div>
             <form onSubmit={handleMint} className="space-y-4">
               <div>
                 <label htmlFor="userId" className="block text-sm font-medium text-gray-700 mb-1">
-                  User ID
+                  ユーザーID
                 </label>
                 <input
                   type="text"
@@ -115,13 +110,13 @@ export default function AdminPage() {
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
-                  placeholder="Enter user ID"
+                  placeholder="ユーザーIDを入力"
                   required
                 />
               </div>
               <div>
                 <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-1">
-                  Amount to Mint
+                  発行量 (CC)
                 </label>
                 <input
                   type="number"
@@ -129,7 +124,7 @@ export default function AdminPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500"
-                  placeholder="Enter amount"
+                  placeholder="発行する金額を入力"
                   min="1"
                   required
                 />
@@ -139,22 +134,22 @@ export default function AdminPage() {
                 disabled={loading}
                 className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 transition-colors disabled:bg-gray-400"
               >
-                {loading ? 'Minting...' : 'Mint Tokens'}
+                {loading ? '発行中...' : 'トークンを発行'}
               </button>
             </form>
           </div>
 
           {/* User Management Section */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold mb-6">User Management</h2>
+            <h2 className="text-2xl font-bold mb-6">ユーザー管理</h2>
             {usersLoading ? (
               <div className="text-center py-8">
-                <div className="text-gray-500">Loading users...</div>
+                <div className="text-gray-500">ユーザー情報を読み込み中...</div>
               </div>
             ) : (
               <div className="space-y-4">
                 <div className="text-sm text-gray-600 mb-4">
-                  Total Users: {users.length}
+                  総ユーザー数: {users.length}名
                 </div>
                 <div className="max-h-96 overflow-y-auto space-y-3">
                   {users.map((user) => (
@@ -185,7 +180,7 @@ export default function AdminPage() {
                           {user.role}
                         </span>
                         <span className="text-xs text-gray-500">
-                          Joined {new Date(user.createdAt).toLocaleDateString()}
+                          登録日: {new Date(user.createdAt).toLocaleDateString('ja-JP')}
                         </span>
                       </div>
                     </div>
@@ -195,7 +190,7 @@ export default function AdminPage() {
             )}
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 }
