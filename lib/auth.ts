@@ -1,12 +1,5 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { prisma } from '@/lib/db';
-import { z } from 'zod';
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -17,26 +10,16 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
+        // Simple demo authentication - accept any email with password length >= 6
+        if (credentials?.email && credentials?.password && credentials.password.length >= 6) {
+          return {
+            id: '1',
+            email: credentials.email,
+            name: credentials.email.split('@')[0],
+            role: 'user',
+          };
         }
-
-        try {
-          // For demo purposes, accept any email/password combination
-          // In production, you would verify against database with proper password hashing
-          if (credentials.password.length >= 6) {
-            return {
-              id: '1',
-              email: credentials.email,
-              name: credentials.email.split('@')[0],
-              role: 'user',
-            };
-          }
-          return null;
-        } catch (error) {
-          console.error('Auth error:', error);
-          return null;
-        }
+        return null;
       },
     }),
   ],
