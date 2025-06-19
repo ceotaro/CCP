@@ -17,8 +17,10 @@ export default function Home() {
     if (session?.user.id) {
       fetchUserData();
       fetchTransactions();
+    } else if (status === 'unauthenticated') {
+      setLoading(false);
     }
-  }, [session]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [session, status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserData = async () => {
     try {
@@ -46,10 +48,18 @@ export default function Home() {
     }
   };
 
-  if (status === 'loading' || loading) {
+  if (status === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
+
+  if (loading && session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading user data...</div>
       </div>
     );
   }
