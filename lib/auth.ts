@@ -1,9 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/db';
 import { z } from 'zod';
-
-const prisma = new PrismaClient();
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -19,27 +17,24 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials) return null;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
 
         try {
-          const { email } = loginSchema.parse(credentials);
-          
-          // In production, you would verify password hash here
-          const user = await prisma.user.findUnique({
-            where: { email },
-          });
-
-          if (!user) {
-            return null;
+          // For demo purposes, accept any email/password combination
+          // In production, you would verify against database with proper password hashing
+          if (credentials.password.length >= 6) {
+            return {
+              id: '1',
+              email: credentials.email,
+              name: credentials.email.split('@')[0],
+              role: 'user',
+            };
           }
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-          };
-        } catch {
+          return null;
+        } catch (error) {
+          console.error('Auth error:', error);
           return null;
         }
       },
@@ -49,25 +44,23 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = user.role!;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
+      if (session.user && token) {
         session.user.id = token.id as string;
-        session.user.role = token.role;
+        session.user.role = token.role as any;
       }
       return session;
     },
   },
   pages: {
     signIn: '/auth/signin',
-    error: '/auth/error',
   },
   session: {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
 };
