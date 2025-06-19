@@ -73,18 +73,52 @@ export default function Home() {
 
   if (!session) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
-          <h1 className="text-3xl font-bold text-center mb-8">CivicCoin Platform</h1>
-          <p className="text-gray-600 text-center mb-8">
-            Regional Digital Currency Management System
-          </p>
-          <button
-            onClick={() => signIn()}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Sign In
-          </button>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mb-6">
+              <span className="text-white font-bold text-xl">CC</span>
+            </div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">CivicCoin Platform</h1>
+            <p className="text-gray-600 text-lg mb-8">
+              地域デジタル通貨管理システム
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-8 space-y-6">
+            <button
+              onClick={() => signIn()}
+              className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
+            >
+              🔐 サインイン
+            </button>
+            
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">または</span>
+              </div>
+            </div>
+            
+            <button
+              onClick={() => window.location.href = '/auth/signup'}
+              className="w-full bg-green-600 text-white py-4 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium text-lg"
+            >
+              ✨ 新規アカウント作成
+            </button>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 className="font-semibold text-blue-900 mb-3">🌟 CivicCoinの特徴</h3>
+            <ul className="text-sm text-blue-800 space-y-2">
+              <li>• 地域経済活性化のためのデジタル通貨</li>
+              <li>• 安全で高速な送金・決済システム</li>
+              <li>• マーチャント向け決済QRコード機能</li>
+              <li>• 透明性の高い取引履歴管理</li>
+            </ul>
+          </div>
         </div>
       </div>
     );
