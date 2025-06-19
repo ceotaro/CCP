@@ -23,10 +23,16 @@ export default function Home() {
   }, [session, status]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchUserData = async () => {
+    if (!session?.user.id) return;
+    
     try {
-      // For now, we'll use a placeholder API call
-      // In production, this would fetch the user's current balance
-      setBalance(1000); // Placeholder balance
+      const res = await fetch(`/api/wallet/${session.user.id}`);
+      if (res.ok) {
+        const data = await res.json();
+        setBalance(data.user.balance);
+      } else {
+        toast.error('Failed to fetch wallet data');
+      }
       setLoading(false);
     } catch {
       toast.error('Failed to fetch user data');
