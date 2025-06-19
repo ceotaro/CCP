@@ -1,8 +1,0 @@
-{
-  "buildCommand": "prisma generate && npm run build",
-  "env": {
-    "CIVICCOIN_MODE": "DB",
-    "NEXTAUTH_URL": "https://your-app-name.vercel.app",
-    "NEXTAUTH_SECRET": "@nextauth-secret"
-  }
-}
