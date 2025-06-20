@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { USER_ROLES } from '@/lib/constants';
 import { z } from 'zod';
 
 const registerSchema = z.object({
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new user
-    const finalRole = email.includes('admin') ? 'admin' : role;
+    const finalRole = email.includes('admin') ? USER_ROLES.ADMIN : role;
     
     const user = await prisma.user.create({
       data: {
