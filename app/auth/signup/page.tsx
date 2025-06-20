@@ -70,7 +70,10 @@ export default function SignUpPage() {
       const registerData = await registerRes.json();
 
       if (!registerRes.ok) {
-        toast.error(registerData.error || 'アカウント作成に失敗しました');
+        console.error('Registration failed:', registerData);
+        const errorMessage = registerData.error || 'アカウント作成に失敗しました';
+        const errorDetails = registerData.details ? `\n詳細: ${registerData.details}` : '';
+        toast.error(errorMessage + errorDetails);
         setLoading(false);
         return;
       }
