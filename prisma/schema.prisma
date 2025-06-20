@@ -10,27 +10,15 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum UserRole {
-  admin
-  merchant
-  user
-}
-
-enum TransactionType {
-  transfer
-  issue
-  burn
 }
 
 model User {
   id            String   @id @default(uuid())
   name          String
   email         String   @unique
-  role          UserRole @default(user)
+  role          String   @default("user") // Changed from enum to String for SQLite
   walletAddress String?  @map("wallet_address")
   balance       Int      @default(0)
   createdAt     DateTime @default(now()) @map("created_at")
@@ -43,13 +31,13 @@ model User {
 }
 
 model Transaction {
-  id                String          @id @default(uuid())
-  senderId          String          @map("sender_id")
-  receiverId        String          @map("receiver_id")
+  id                String   @id @default(uuid())
+  senderId          String   @map("sender_id")
+  receiverId        String   @map("receiver_id")
   amount            Int
-  type              TransactionType
-  blockchainTxHash  String?         @map("blockchain_tx_hash")
-  createdAt         DateTime        @default(now()) @map("created_at")
+  type              String   // Changed from enum to String for SQLite
+  blockchainTxHash  String?  @map("blockchain_tx_hash")
+  createdAt         DateTime @default(now()) @map("created_at")
 
   sender   User @relation("sender", fields: [senderId], references: [id])
   receiver User @relation("receiver", fields: [receiverId], references: [id])

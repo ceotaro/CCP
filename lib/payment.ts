@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/db';
-import { TransactionType } from '@prisma/client';
 
 // Schema for validation - keeping for future use
 // const transferSchema = z.object({
@@ -62,7 +61,7 @@ async function processDbTransfer(senderId: string, receiverId: string, amount: n
         senderId,
         receiverId,
         amount,
-        type: TransactionType.transfer,
+        type: 'transfer',
       },
     });
 
@@ -110,7 +109,7 @@ export async function mintTokens({
           senderId: adminId,
           receiverId: userId,
           amount,
-          type: TransactionType.issue,
+          type: 'issue',
         },
       });
 
