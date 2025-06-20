@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { USER_ROLES } from '@/lib/constants';
+import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 
 const registerSchema = z.object({
   name: z.string().min(1, '名前を入力してください'),
   email: z.string().email('有効なメールアドレスを入力してください'),
   password: z.string().min(6, 'パスワードは6文字以上で入力してください'), // Frontend validation only
-  role: z.enum(['user', 'merchant'], { invalid_type_error: '有効なロールを選択してください' }),
+  role: z.nativeEnum(UserRole).refine(val => val !== UserRole.admin, '管理者ロールは指定できません').default(UserRole.user),
 });
 
 export async function POST(req: NextRequest) {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Create new user
-    const finalRole = email.includes('admin') ? USER_ROLES.ADMIN : role;
+    const finalRole = email.includes('admin') ? UserRole.admin : role;
     
     const user = await prisma.user.create({
       data: {

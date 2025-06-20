@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { UserRole } from '@prisma/client';
 import { z } from 'zod';
 
 const createUserSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
-  role: z.enum(['admin', 'merchant', 'user']).optional().default('user'),
+  role: z.nativeEnum(UserRole).optional().default(UserRole.user),
 });
 
 export async function POST(req: NextRequest) {

@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/db';
-import { TRANSACTION_TYPES, USER_ROLES } from '@/lib/constants';
+import { TransactionType, UserRole } from '@prisma/client';
 
 // Schema for validation - keeping for future use
 // const transferSchema = z.object({
@@ -62,7 +62,7 @@ async function processDbTransfer(senderId: string, receiverId: string, amount: n
         senderId,
         receiverId,
         amount,
-        type: TRANSACTION_TYPES.TRANSFER,
+        type: TransactionType.transfer,
       },
     });
 
@@ -90,7 +90,7 @@ export async function mintTokens({
     where: { id: adminId },
   });
 
-  if (!admin || admin.role !== USER_ROLES.ADMIN) {
+  if (!admin || admin.role !== UserRole.admin) {
     throw new Error('Unauthorized: Only admins can mint tokens');
   }
 
@@ -110,7 +110,7 @@ export async function mintTokens({
           senderId: adminId,
           receiverId: userId,
           amount,
-          type: TRANSACTION_TYPES.ISSUE,
+          type: TransactionType.issue,
         },
       });
 
