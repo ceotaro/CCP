@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
 
     // Debug logging for development
     if (process.env.NODE_ENV === 'development') {
-      console.log('Registration attempt:', { name, email, role });
+      console.warn('Registration attempt:', { name, email, role });
     }
 
     // Check if user already exists
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (process.env.NODE_ENV === 'development') {
-      console.log('User created successfully:', user.id);
+      console.warn('User created successfully:', user.id);
     }
 
     return NextResponse.json({

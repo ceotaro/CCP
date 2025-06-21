@@ -212,7 +212,7 @@ export default function AdminPage() {
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'mint' | 'burn' | 'users' | 'transactions')}
                 className={`py-4 px-2 border-b-2 font-medium text-sm ${
                   activeTab === tab.id
                     ? 'border-purple-500 text-purple-600'
